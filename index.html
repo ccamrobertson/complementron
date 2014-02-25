@@ -1,0 +1,195 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<head>
+	<title>Elizabeth's Reverse Completementron</title>
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script> 
+	<script type="text/javascript">
+	$(function(){
+		var app = {
+			convert_primer: function($input) {
+				var primer = $input.toUpperCase();
+				
+				// reverse string by first turning into array
+				var reverse_primer = primer.split("").reverse();
+
+				var new_primer = [];
+
+				// read through array and replace each primer with its complement
+				for (var i=0;i<reverse_primer.length;i++) {
+					if (reverse_primer[i] == "A") {
+						new_primer.push("T");
+					}else if(reverse_primer[i] == "T") {
+						new_primer.push("A");				
+					}else if(reverse_primer[i] == "G") {
+						new_primer.push("C");
+					}else if(reverse_primer[i] == "C") {
+						new_primer.push("G");
+					}
+				}
+				
+				// change the status of the output field
+				$("#output").attr('value',new_primer.join(""));
+				if($input.match(/[^ATCGatcg]/)){
+					$("#output").addClass('fail');
+					$("#output").removeClass('selected');
+				} else if ($input.match(/[ATCGatcg]/)) {
+					$("#output").addClass('selected');	
+					$("#output").removeClass('fail');					
+				} else {
+					$("#output").removeClass('fail');
+					$("#output").removeClass('selected');					
+				}
+
+				// fun things
+				if ($input == "smiley" || $input == ":-)") {
+					$("#smiley").html("<img src=\"http://www.smileystar.com/emoticons/msn-smiley-emoticons/dance-smiley.gif\" />");
+					$("#output").removeClass('fail');
+					$("#output").removeClass('selected');
+				} else if ($input == "dna") {
+					$("body").css('background-image', 'url(http://3.bp.blogspot.com/_zY7hIwMmNiA/TU9tpDah4RI/AAAAAAAABRw/mUOhIXA6Z8Q/s1600/dnapixels.PNG)');					
+					$("#container").css('backgroundColor', '#fff');					
+				} else {						
+					$("#smiley").html(null);
+				}
+			}
+		}
+
+		//listen on the primer input field for changes
+		$('#primer').live('keyup', function() {
+			var $f = this;
+			app.convert_primer($(this).attr('value'));
+		});
+		
+	});	
+	</script>
+	
+	<style type="text/css">
+
+		#container {
+			padding: 20px;
+		}
+
+		.selected {
+			background-color:lightyellow;
+		}
+
+		.fail {
+			background-color:lightpink;
+		}
+		
+		.field {
+			font-size:24px;
+			width:300px;
+		}
+		
+		.left {
+			margin-top: 10px;
+			padding: 5px 0px 10px 0;
+			width: 300px;
+			float: left;
+		}
+		
+		.right {
+			margin-top: 10px;
+			padding: 5px 0 10px 0px;
+			width: 300px;
+			float: left;
+		}
+		
+		.center {
+			float:left;
+			width:1px;
+			padding-left: 20px;
+			border-right: 1px dashed #aaa;	
+			margin-top: 10px;
+			margin-right: 20px;	
+			height: 100px;	
+		}
+		
+		.clear {
+			clear: both;
+		}
+
+		#smiley {
+			padding-left: 5px;
+		}
+
+		h1 {
+			font-family: Helvetica, Arial, sans-serif;
+			margin: 5px 0;
+		}
+		
+		h2 {
+			font-family: Helvetica, Arial, sans-serif;
+			margin: 5px 0;
+			color: #666;
+		}
+		
+		body {
+			width: 700px;
+			margin: 50px auto;
+		}
+		
+		p {
+			border-top: 1px solid #666;
+			margin: 5px 0;
+			padding: 10px 0 0 0;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 0.9em;
+			color: #666;
+		}
+		
+		#footer {
+			margin-top: 10px;
+			font-family: Helvetica, Arial, sans-serif;
+			font-size: 0.8em;
+			color: #666;
+		}
+		
+	</style>
+	
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-22421728-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</head>
+<body>
+
+	<!-- Thanks for checking out the complementron! It is quite simple. Let me know if you like it at cameron at api dot gy -->
+
+	<div id="container">
+	<h1>Elizabeth's Reverse Complementron<span id="smiley"></span></h1>
+	<p>Hello! Welcome to Elizabeth's Reverse Complementron! Just type or paste in your sequence on the left and Elizabeth's Reverse Complementron will take care of the rest. Voila!</p>
+	
+	<div class="left">
+		<h2>Sequence</h2>
+		<input id="primer" name="primer" value="" class="field" />
+	</div>
+
+	<div class="center">
+	</div>
+
+	<div class="right">
+		<h2>Reverse Complement</h2>
+		<input id="output" value="" class="field" />
+	</div>
+		
+	<div class="clear"></div>
+
+	<div id="footer">Made for Elizabeth</div>	
+	</div>
+	
+</body>
+</html>
